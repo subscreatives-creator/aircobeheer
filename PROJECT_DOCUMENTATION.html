@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airco Beheer - Project Documentatie</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fff;
+        }
+        h1 {
+            font-size: 28px;
+            color: #13293E;
+            border-bottom: 3px solid #1C9ADB;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            font-size: 22px;
+            color: #13293E;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #1C9ADB;
+            padding-left: 12px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #1C9ADB;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 12px;
+        }
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+        .highlight {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #1C9ADB;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #13293E;
+            color: white;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        .file-list {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .file-list code {
+            display: block;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        @media print {
+            body {
+                padding: 20px;
+                font-size: 12px;
+            }
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+            h3 { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔧 Airco Beheer - Onderhoudsrapport Systeem</h1>
+
+    <div class="highlight">
+        <strong>📋 Project Overzicht:</strong> Volledig werkend onderhoudsrapport systeem voor Airco Beheer met admin panel en klantrapport pagina.
+    </div>
+
+    <h2>📌 Belangrijke URLs</h2>
+    <ul>
+        <li><strong>Admin Panel:</strong> <code>http://localhost/site/admin.php</code></li>
+        <li><strong>Rapport Pagina:</strong> <code>http://localhost/site/rapport.php?id=UUID</code></li>
+        <li><strong>phpMyAdmin:</strong> <code>http://localhost/phpmyadmin</code></li>
+    </ul>
+
+    <h2>1️⃣ Admin Panel (admin.php)</h2>
+    
+    <h3>Functionaliteit:</h3>
+    <ul>
+        <li>Formulier voor het aanmaken van nieuwe onderhoudsrapporten</li>
+        <li><strong>Velden:</strong>
+            <ul>
+                <li>Klantnaam (verplicht)</li>
+                <li>Datum bezoek (verplicht)</li>
+                <li>Locatie/Adres (verplicht)</li>
+                <li>Status: A (Uitstekend), B (Goed), C (Aandacht vereist)</li>
+                <li>Uitgevoerde werkzaamheden (bullet points)</li>
+                <li>Opmerking monteur (optioneel)</li>
+                <li>Foto uploads (max 12 foto's)</li>
+            </ul>
+        </li>
+        <li>Na opslaan: genereert unieke link per klant</li>
+        <li>"Kopieer link" knop om naar klant te sturen via e-mail</li>
+        <li>"Nieuw rapport aanmaken" knop om formulier te resetten</li>
+    </ul>
+
+    <h2>2️⃣ Klant Rapport Pagina (rapport.php)</h2>
+
+    <h3>Functionaliteit:</h3>
+    <ul>
+        <li>Laadt rapportgegevens dynamisch uit database op basis van unieke ID</li>
+        <li><strong>Toont:</strong>
+            <ul>
+                <li>Status badge (A/B/C met kleurcodering)</li>
+                <li>Samen vatting van uitgevoerde werkzaamheden</li>
+                <li>Foto's met lightbox viewer (klik om te vergroten)</li>
+                <li>Opmerking monteur</li>
+                <li>"Activeer jaarlijks onderhoud" CTA knop</li>
+            </ul>
+        </li>
+        <li>Als ID niet bestaat: toont "Rapport niet gevonden" bericht</li>
+    </ul>
+
+    <h2>3️⃣ Foto Uploads</h2>
+    <ul>
+        <li>Fotos worden geüpload via admin formulier</li>
+        <li>Opgeslagen op server in <code>uploads/fotos/</code></li>
+        <li>Elke foto heeft eigen label (bijv. "Binnenunit voor", "Binnenunit na")</li>
+        <li>Maximaal 12 foto's per rapport</li>
+        <li>Ondersteunde formaten: JPG, PNG, WEBP</li>
+    </ul>
+
+    <h2>4️⃣ Database (MySQL)</h2>
+
+    <h3>Database naam: <code>airco_beheer</code></h3>
+
+    <h3>Tabellen:</h3>
+
+    <h4>rapporten (onderhoudsrapporten)</h4>
+    <table>
+        <tr>
+            <th>Veld</th>
+            <th>Type</th>
+            <th>Beschrijving</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>VARCHAR(36)</td>
+            <td>UUID unieke identificator</td>
+        </tr>
+        <tr>
+            <td>klant</td>
+            <td>VARCHAR(255)</td>
+            <td>Klantnaam</td>
+        </tr>
+        <tr>
+            <td>locatie</td>
+            <td>VARCHAR(500)</td>
+            <td>Adres/locatie</td>
+        </tr>
+        <tr>
+            <td>datum</td>
+            <td>DATE</td>
+            <td>Datum van bezoek</td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td>ENUM('A','B','C')</td>
+            <td>Status van installatie</td>
+        </tr>
+        <tr>
+            <td>samenvatting</td>
+            <td>JSON</td>
+            <td>Lijst van uitgevoerde werkzaamheden</td>
+        </tr>
+        <tr>
+            <td>monteur_opmerking</td>
+            <td>TEXT</td>
+            <td>Opmerking van monteur</td>
+        </tr>
+        <tr>
+            <td>fotos</td>
+            <td>JSON</td>
+            <td>Array van foto objecten met url en label</td>
+        </tr>
+        <tr>
+            <td>created_at</td>
+            <td>DATETIME</td>
+            <td>Aanmaakdatum</td>
+        </tr>
+    </table>
+
+    <h4>contract_aanvragen (upgrade verzoeken)</h4>
+    <table>
+        <tr>
+            <th>Veld</th>
+            <th>Type</th>
+            <th>Beschrijving</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td>INT</td>
+            <td>Auto increment ID</td>
+        </tr>
+        <tr>
+            <td>rapport_id</td>
+            <td>VARCHAR(36)</td>
+            <td>Verwijzing naar rapport</td>
+        </tr>
+        <tr>
+            <td>aangevraagd_op</td>
+            <td>DATETIME</td>
+            <td>Wanneer aangevraagd</td>
+        </tr>
+    </table>
+
+    <h2>⚙️ Installatie</h2>
+
+    <h3>Stap 1: Database Installeren</h3>
+    <ol>
+        <li>Open phpMyAdmin: <code>http://localhost/phpmyadmin</code></li>
+        <li>Maak een nieuwe database aan: <code>airco_beheer</code></li>
+        <li>Klik op "Import" en selecteer het bestand <code>database_setup.sql</code></li>
+        <li>Klik op "Go" om de tabellen aan te maken</li>
+    </ol>
+
+    <h3>Stap 2: Bestanden Controleren</h3>
+    <p>Zorg dat de volgende bestanden in de root staan:</p>
+    <div class="file-list">
+        <code>admin.php - Admin panel</code>
+        <code>rapport.php - Klant rapport pagina</code>
+        <code>api.php - Backend API</code>
+        <code>config.php - Configuratie</code>
+        <code>database_setup.sql - Database schema</code>
+        <code>uploads/fotos/ - Map voor foto uploads</code>
+    </div>
+
+    <h2>📖 Gebruik</h2>
+
+    <h3>Stap 1: Maak Rapport aan</h3>
+    <ol>
+        <li>Ga naar <code>admin.php</code></li>
+        <li>Vul klantgegevens in</li>
+        <li>Selecteer status</li>
+        <li>Voeg werkzaamheden toe (klik "+ Regel toevoegen")</li>
+        <li>Upload foto's</li>
+        <li>Klik "Rapport opslaan & link genereren"</li>
+    </ol>
+
+    <h3>Stap 2: Deel Link met Klant</h3>
+    <ol>
+        <li>Na opslaan verschijnt een succes scherm</li>
+        <li>Klik "Kopieer link"</li>
+        <li>Plak in e-mail naar klant</li>
+    </ol>
+
+    <h3>Stap 3: Klant Bekijkt Rapport</h3>
+    <ol>
+        <li>Klant opent de link</li>
+        <li>Ziet alle rapportgegevens</li>
+        <li>Kan foto's bekijken in lightbox</li>
+        <li>Kan "Activeer jaarlijks onderhoud" klikken</li>
+    </ol>
+
+    <h2>🔧 Technische Details</h2>
+
+    <h3>Base URL</h3>
+    <p>De base URL is centraal gedefinieerd in <code>config.php</code>:</p>
+    <pre>define('BASE_URL', 'http://localhost/site');</pre>
+
+    <h3>API Endpoints</h3>
+    <table>
+        <tr>
+            <th>Actie</th>
+            <th>Methode</th>
+            <th>URL</th>
+        </tr>
+        <tr>
+            <td>Get Rapport</td>
+            <td>GET</td>
+            <td><code>api.php?action=get_rapport&id=UUID</code></td>
+        </tr>
+        <tr>
+            <td>Create Rapport</td>
+            <td>POST</td>
+            <td><code>api.php</code> (action=create_rapport)</td>
+        </tr>
+        <tr>
+            <td>Upload Foto</td>
+            <td>POST</td>
+            <td><code>api.php</code> (action=upload_foto)</td>
+        </tr>
+        <tr>
+            <td>Activate Contract</td>
+            <td>POST</td>
+            <td><code>api.php</code> (action=activate_contract)</td>
+        </tr>
+    </table>
+
+    <h2>📁 Bestand Structuur</h2>
+    <pre>/site
+├── admin.php                  # Admin panel
+├── rapport.php                # Klant rapport pagina
+├── api.php                    # Backend API
+├── config.php                 # Configuratie
+├── database_setup.sql         # Database schema
+├── uploads/
+│   └── fotos/                # Foto uploads
+└── PROJECT_DOCUMENTATION.html # Dit document</pre>
+
+    <div class="warning">
+        <strong>⚠️ Belangrijk:</strong> Bij vragen of problemen:
+        <ul>
+            <li>Controleer of database correct is geïmporteerd</li>
+            <li>Controleer of de <code>uploads/fotos/</code> map writeable is</li>
+            <li>Controleer of XAMP MySQL service draait</li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <strong>✅ Project Status:</strong> Alle functionaliteit is geïmplementeerd en getest. Het systeem is klaar voor gebruik.
+    </div>
+
+    <hr style="margin-top: 40px; border: none; border-top: 1px solid #ddd;">
+    <p style="text-align: center; color: #666; font-size: 12px; margin-top: 20px;">
+        Document gegenereerd op 2026 | Airco Beheer Onderhoudsrapport Systeem
+    </p>
+
+</body>
+</html>
